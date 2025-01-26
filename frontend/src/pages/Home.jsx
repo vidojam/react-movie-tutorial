@@ -9,7 +9,7 @@ function Home() {
     const [searchQuery, setSearchQuery] = useState("");
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
       const loadPopularMovies = async () => {
@@ -19,12 +19,14 @@ function Home() {
         }
         
         catch (error) {   
-          console.error("Error fetching popular movies:", error);
+          console.log(err)
+          setError=("Error fetching popular movies:");
         }
         finally {
-          setIsLoading(false);
+          setLoading(false);
         }
       }
+      loadPopularMovies();
     }, []);
 
 
