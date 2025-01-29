@@ -30,9 +30,23 @@ function Home() {
     }, []);
 
 
-  const handleSearch = (e) => {
-    e.preventDfault();
-    alert(searchQuery);
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      const searchResults = await searchMovies(searchQuery);
+      setMovies(searchResults);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError("Error fetching search results");
+    } finally { 
+      setLoading(false);
+    }
+    
     setSearchQuery("");
   }
 
@@ -45,17 +59,25 @@ function Home() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             />
+
+          <button type="submit" className="search-button">
+            Search
+          </button>
         </form>
 
-        <button type="submit" className="search-button">Search</button>
+        {error && <div className="error-message">{error}</div>}
 
+        {Loading ? (
+        <div className="loading">Loading...</div>
+        ) : (
         <div className="movies-grid">
             {movies.map((movie) => (
-                movie.title.toLowerCase().startswith(searchQuery) && <MovieCard 
-                movie = {movie} key={movie.id}/>
-            )
-            )}
+                // movie.title.toLowerCase().startswith(searchQuery) && 
+                <MovieCard movie = {movie} key={movie.id}/>
+            
+            ))}
         </div>
+        )}
     </div>
   );    
 }
