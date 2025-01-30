@@ -33,7 +33,7 @@ function Home() {
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-    if (loading) return;
+    if (isLoading) return;
 
     setLoading(true);
     try {
