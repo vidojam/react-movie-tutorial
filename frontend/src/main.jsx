@@ -6,10 +6,10 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Router>
-      <Routes>
+    <BrowswerRouter>
+    
         <Route path="/" element={<App />} />
-      </Routes>
-    </Router>
+    
+    </BrowswerRouter>
   </StrictMode>,
 )
